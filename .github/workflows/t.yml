@@ -19,7 +19,7 @@ jobs:
 
     - name: Start Ngrok
       run: |
-        .\ngrok.exe authtoken YOUR_NGROK_TOKEN
+        .\ngrok.exe authtoken 2fAneLev2Zmlp6r7rErNBY3abUp_79tUroRNJMYcnArAdBJHd
         Start-Process -NoNewWindow -FilePath ".\ngrok.exe" -ArgumentList "tcp 3389"
         timeout 10
         curl http://127.0.0.1:4040/api/tunnels
