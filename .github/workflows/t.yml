@@ -7,11 +7,6 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Setup User
-      run: |
-        net user runneradmin Pass@123 /add
-        net localgroup administrators runneradmin /add
-
     - name: Enable RDP
       run: |
         reg add "HKLM\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
@@ -25,5 +20,5 @@ jobs:
     - name: Start Ngrok
       run: |
         dir
-        .\ngrok.exe authtoken 2fAneLev2Zmlp6r7rErNBY3abUp_79tUroRNJMYcnArAdBJHd
+        .\ngrok.exe authtoken YOUR_NGROK_TOKEN
         .\ngrok.exe tcp 3389
