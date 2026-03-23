@@ -1,0 +1,25 @@
+name: Windows RDP
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Enable RDP
+      run: |
+        net user runneradmin Password@123
+        net localgroup administrators runneradmin /add
+        reg add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Terminal Server" /v fDenyTSConnections /t REG_DWORD /d 0 /f
+        Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
+
+    - name: Download Ngrok
+      run: |
+        Invoke-WebRequest https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-stable-windows-amd64.zip -OutFile ngrok.zip
+        Expand-Archive ngrok.zip
+
+    - name: Connect Ngrok
+      run: |
+        .\ngrok.exe authtoken 2fAneLev2Zm1p6r7rEnNBY3abUp_79tUroRNJMYcnArAdBJHd
+        .\ngrok.exe tcp 3389
